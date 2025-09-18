@@ -4,10 +4,13 @@ import com.gerenciador_cartao.autorizador.exception.CartaoExistenteException;
 import com.gerenciador_cartao.autorizador.dto.CartaoDto;
 import com.gerenciador_cartao.autorizador.exception.CartaoNaoEcnontradoException;
 import com.gerenciador_cartao.autorizador.model.Cartao;
+import com.gerenciador_cartao.autorizador.model.Status;
 import com.gerenciador_cartao.autorizador.repository.CartaoRepository;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -42,6 +45,21 @@ public class CartaoService {
             throw new CartaoNaoEcnontradoException("Cartão não encontrado");
         }
         return cartao;
+    }
+    
+    public Pair<Status, Cartao> debitar(String numeroCartao, String senha, BigDecimal valor) {
+        Cartao cartao = findCartaoByNumeroCartao(numeroCartao);
+
+        if (!passwordEncoder.matches(senha, cartao.getSenha())) {
+            return Pair.of(Status.SENHA_INVALIDA, cartao);
+        }
+
+        if (valor.compareTo(cartao.getSaldo()) > 0) {
+            return Pair.of(Status.SALDO_INSUFICIENTE, cartao);
+        }
+
+        cartao.debitar(valor);
+        return Pair.of(Status.SUCESSO, cartao);
     }
 
     private boolean validaCartaoExistente(String numeroCartao) {

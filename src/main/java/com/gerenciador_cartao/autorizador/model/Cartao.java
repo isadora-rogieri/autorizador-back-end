@@ -65,15 +65,15 @@ public class Cartao {
         return saldo;
     }
 
-    public void setSaldo(BigDecimal saldo) {
-        this.saldo = saldo;
-    }
-
     public List<Transacao> getTransacoes() {
         return transacoes;
     }
 
     public void setTransacoes(List<Transacao> transacoes) {
         this.transacoes = transacoes;
+    }
+
+    public void debitar(BigDecimal valor) {
+        this.saldo = this.saldo.subtract(valor);
     }
 }

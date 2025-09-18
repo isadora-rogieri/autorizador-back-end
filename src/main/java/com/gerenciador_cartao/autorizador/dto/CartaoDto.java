@@ -8,12 +8,14 @@ import java.math.BigDecimal;
 
 public class CartaoDto {
 
-    @NotBlank
+    @NotBlank(message = "Número do cartão é obrigatório")
     @Size(min = 16, max = 16, message = "O número do cartão deve conter 16 digitos")
     @Pattern(regexp = "\\d+", message = "O número do cartão deve conter apenas dígitos")
     private String numeroCartao;
 
-    @NotBlank
+    @NotBlank(message = "senha é obrigatória")
+    @Size(min = 4, max = 4, message = "A senha do cartão deve conter 4 digitos")
+    @Pattern(regexp = "\\d+", message = "A senha do cartão deve conter apenas dígitos")
     private String senha;
 
     private BigDecimal saldo;

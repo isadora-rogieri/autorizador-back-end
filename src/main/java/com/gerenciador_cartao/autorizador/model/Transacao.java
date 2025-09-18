@@ -2,6 +2,7 @@ package com.gerenciador_cartao.autorizador.model;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -24,6 +25,16 @@ public class Transacao {
     @Column( name = "STATUS")
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @Column( name = "VALOR")
+    private BigDecimal valor;
+
+    public Transacao(Cartao cartao, Status status, BigDecimal valor) {
+        this.cartao = cartao;
+        this.dataTransacao = LocalDateTime.now();
+        this.status = status;
+        this.valor = valor;
+    }
 
     public UUID getId() {
         return id;
@@ -55,5 +66,13 @@ public class Transacao {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
     }
 }
