@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import static java.util.Objects.isNull;
 
@@ -47,6 +48,10 @@ public class CartaoService {
             throw new CartaoNaoEncontradoException("Cartão não encontrado");
         }
         return cartao;
+    }
+
+    public List<Cartao> consultaCartaoList() {
+        return repository.findAll();
     }
 
     public Pair<Status, Cartao> debitar(String numeroCartao, String senha, BigDecimal valor) {
