@@ -1,9 +1,6 @@
 package com.gerenciador_cartao.autorizador.dto;
 
 import com.gerenciador_cartao.autorizador.model.Status;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
@@ -17,10 +14,12 @@ public class TransacaoDto {
     private String numeroCartao;
 
     @NotBlank(message = "senha é obrigatória")
+    @Size(min = 4, max = 4, message = "A senha do cartão deve conter 4 digitos")
+    @Pattern(regexp = "\\d+", message = "A senha do cartão deve conter apenas dígitos")
     private String senha;
 
     @NotNull(message = "valor é obrigatório")
-    @Min( value = 1, message = "Valor deve ser maior que zero")
+    @Min(value = 1, message = "Valor deve ser maior que zero")
     private BigDecimal valor;
 
     private LocalDateTime dataTransacao;

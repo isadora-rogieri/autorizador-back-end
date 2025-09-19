@@ -1,8 +1,6 @@
 package com.gerenciador_cartao.autorizador.controller;
 
-import com.gerenciador_cartao.autorizador.dto.CartaoDto;
 import com.gerenciador_cartao.autorizador.dto.TransacaoDto;
-import com.gerenciador_cartao.autorizador.service.CartaoService;
 import com.gerenciador_cartao.autorizador.service.TransacaoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

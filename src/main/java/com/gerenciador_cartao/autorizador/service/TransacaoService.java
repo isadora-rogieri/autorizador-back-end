@@ -34,15 +34,13 @@ public class TransacaoService {
         return transacaoDto;
     }
 
-    private TransacaoDto toDto (Transacao entity) {
+    private TransacaoDto toDto(Transacao entity) {
         TransacaoDto transacaoDto = new TransacaoDto();
         transacaoDto.setDataTransacao(entity.getDataTransacao());
         transacaoDto.setNumeroCartao(entity.getCartao().getNumeroCartao());
         transacaoDto.setValor(entity.getValor());
         transacaoDto.setStatus(entity.getStatus());
-        return  transacaoDto;
+        return transacaoDto;
     }
-
-
 
 }

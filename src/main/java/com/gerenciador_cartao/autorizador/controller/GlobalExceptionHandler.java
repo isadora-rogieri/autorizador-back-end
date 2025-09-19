@@ -1,16 +1,18 @@
 package com.gerenciador_cartao.autorizador.controller;
 
 import com.gerenciador_cartao.autorizador.exception.CartaoExistenteException;
-import com.gerenciador_cartao.autorizador.exception.CartaoNaoEcnontradoException;
+import com.gerenciador_cartao.autorizador.exception.CartaoNaoEncontradoException;
 import com.gerenciador_cartao.autorizador.exception.TransacaoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -25,8 +27,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-    @ExceptionHandler(CartaoNaoEcnontradoException.class)
-    public ResponseEntity<Object> handleCartaoNaoEncontrado(CartaoNaoEcnontradoException ex) {
+    @ExceptionHandler(CartaoNaoEncontradoException.class)
+    public ResponseEntity<Object> handleCartaoNaoEncontrado(CartaoNaoEncontradoException ex) {
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("status", HttpStatus.NOT_FOUND.value());
@@ -56,5 +58,21 @@ public class GlobalExceptionHandler {
         body.put("message", ex.getMessage());
 
         return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, Object>> handleValidationExceptions(
+            MethodArgumentNotValidException ex) {
+
+        Map<String, Object> errors = new HashMap<>();
+        String message = ex.getBindingResult().getFieldErrors().stream()
+                .map(err -> err.getField() + ": " + err.getDefaultMessage())
+                .collect(Collectors.joining("; "));
+
+        errors.put("error", "Dados inválidos");
+        errors.put("message", message);
+        errors.put("status", HttpStatus.BAD_REQUEST.value());
+
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 }

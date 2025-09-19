@@ -19,7 +19,8 @@ public class CartaoController {
 
     @PostMapping
     public ResponseEntity<CartaoDto> cadastrarCartao(@Valid @RequestBody CartaoDto cartaoDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(cartaoService.cadastrarCartao(cartaoDto));
+        var cartao = cartaoService.cadastrarCartao(cartaoDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(cartaoService.toDto(cartao));
     }
 
     @GetMapping("/{numeroCartao}")

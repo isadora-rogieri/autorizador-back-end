@@ -12,21 +12,21 @@ public class Transacao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column( name = "ID")
+    @Column(name = "ID")
     private UUID id;
 
     @ManyToOne
     @JoinColumn(name = "cartao_id", nullable = false)
     private Cartao cartao;
 
-    @Column( name = "DATA_HORA")
+    @Column(name = "DATA_HORA")
     private LocalDateTime dataTransacao;
 
-    @Column( name = "STATUS")
+    @Column(name = "STATUS")
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @Column( name = "VALOR")
+    @Column(name = "VALOR")
     private BigDecimal valor;
 
     public Transacao(Cartao cartao, Status status, BigDecimal valor) {
@@ -34,6 +34,9 @@ public class Transacao {
         this.dataTransacao = LocalDateTime.now();
         this.status = status;
         this.valor = valor;
+    }
+
+    public Transacao() {
     }
 
     public UUID getId() {

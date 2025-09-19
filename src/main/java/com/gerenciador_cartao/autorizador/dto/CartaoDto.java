@@ -20,6 +20,16 @@ public class CartaoDto {
 
     private BigDecimal saldo;
 
+    public CartaoDto(String numeroCartao, String senha) {
+        this.numeroCartao = numeroCartao;
+        this.senha = senha;
+    }
+
+    public CartaoDto() {
+    }
+
+    ;
+
     public String getNumeroCartao() {
         return numeroCartao;
     }
