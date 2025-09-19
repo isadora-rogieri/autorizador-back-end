@@ -76,6 +76,12 @@ autorizador/
  * JUnit & Test Libraries 
 ```
 
+## Executando o Projeto:
+* mvn clean install -> Instale as dependências necessárias
+* mvn spring-boot:run -> Rodar o projeto
+* mvn test -> Executar testes
+
+
 ## Endpoints [Swagger](http://localhost:8080/swagger-ui/index.html#)
 
 

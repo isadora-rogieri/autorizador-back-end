@@ -7,6 +7,8 @@ import com.gerenciador_cartao.autorizador.model.Cartao;
 import com.gerenciador_cartao.autorizador.model.Status;
 import com.gerenciador_cartao.autorizador.repository.CartaoRepository;
 import org.apache.commons.lang3.tuple.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ import static java.util.Objects.isNull;
 @Service
 public class CartaoService {
 
+    private static final Logger logger = LoggerFactory.getLogger(CartaoService.class);
     @Autowired
     private CartaoRepository repository;
 
@@ -25,6 +28,7 @@ public class CartaoService {
 
     public Cartao cadastrarCartao(CartaoDto cartaoDto) {
         if (validaCartaoExistente(cartaoDto.getNumeroCartao())) {
+            logger.error("JA EXISTE UM CARTAO CADASTRADO COM ESSE NUMERO: " + cartaoDto.getNumeroCartao());
             throw new CartaoExistenteException("Já existe um Cartão cadastrado com esse número");
         }
         Cartao cartao = new Cartao(cartaoDto.getNumeroCartao(),
@@ -39,6 +43,7 @@ public class CartaoService {
     public Cartao findCartaoByNumeroCartao(String numeroCartao) {
         var cartao = repository.findByNumeroCartao(numeroCartao);
         if (isNull(cartao)) {
+            logger.error("CARTAO NAO ENCONTRADO " + numeroCartao);
             throw new CartaoNaoEncontradoException("Cartão não encontrado");
         }
         return cartao;

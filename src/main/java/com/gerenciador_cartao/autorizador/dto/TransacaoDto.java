@@ -19,7 +19,7 @@ public class TransacaoDto {
     private String senha;
 
     @NotNull(message = "valor é obrigatório")
-    @Min(value = 1, message = "Valor deve ser maior que zero")
+    @Min(value = 1, message = "Valor deve ser maior que um")
     private BigDecimal valor;
 
     private LocalDateTime dataTransacao;

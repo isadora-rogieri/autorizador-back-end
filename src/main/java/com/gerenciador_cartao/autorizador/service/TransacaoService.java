@@ -5,11 +5,15 @@ import com.gerenciador_cartao.autorizador.exception.TransacaoException;
 import com.gerenciador_cartao.autorizador.model.Status;
 import com.gerenciador_cartao.autorizador.model.Transacao;
 import com.gerenciador_cartao.autorizador.repository.TransacaoRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TransacaoService {
+
+    private static final Logger logger = LoggerFactory.getLogger(TransacaoService.class);
 
     @Autowired
     private TransacaoRepository repository;
@@ -28,9 +32,10 @@ public class TransacaoService {
         var transacaoDto = toDto(repository.save(transacaoSave));
 
         if (!transacao.getLeft().equals(Status.SUCESSO)) {
+            logger.error("ERRO AO REALIZAR TRANSACAO: " + dto.getNumeroCartao() + " - " + transacao.getLeft());
             throw new TransacaoException(transacao.getLeft());
         }
-
+        logger.info("TRANSACAO REALIZADA COM SUCESSO: " + dto.getNumeroCartao());
         return transacaoDto;
     }
 
