@@ -78,7 +78,7 @@ public class TransacaoControllerTest {
     }
 
     @Test
-    @DisplayName("Deve realizar uma transação com sucesso")
+    @DisplayName("Realizar uma transação com sucesso")
     void realizaTransacaoSucessoTest() throws Exception {
         TransacaoDto dto = new TransacaoDto();
         dto.setValor(new BigDecimal(50.25));
@@ -142,7 +142,7 @@ public class TransacaoControllerTest {
     }
 
     @Test
-    @DisplayName("Deve retornar 401 sem autenticação")
+    @DisplayName("Retornar 401 sem autenticação")
     void headerSemAutenticacaoTest() throws Exception {
         CartaoDto dto = new CartaoDto("1234567890123456", "1234");
         mockMvc.perform(MockMvcRequestBuilders.post(TRANSACAO_URL)

@@ -1,5 +1,6 @@
 package com.gerenciador_cartao.autorizador.telas;
 
+import com.gerenciador_cartao.autorizador.utils.GeraNumeroCartao;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
@@ -14,9 +15,12 @@ import java.time.Duration;
 
 @DisplayName("Teste Automatizado do cadastro de cartão")
 @TestMethodOrder(OrderAnnotation.class)
+@Tag("ui")
 public class CadastroCartaoTest {
 
-    WebDriver navegador;
+    private WebDriver navegador;
+
+    private static final String NUMERO_CARTAO = GeraNumeroCartao.gerarNumero16Digitos();
 
     @BeforeEach
     public void inicializaLogin() {
@@ -39,7 +43,7 @@ public class CadastroCartaoTest {
                 By.id("cadastroCartao")
         ));
         botaoCadastro.click();
-        navegador.findElement(By.id("numeroCartao")).sendKeys("3452074414321093");
+        navegador.findElement(By.id("numeroCartao")).sendKeys(NUMERO_CARTAO);
         navegador.findElement(By.cssSelector("input.p-password-input")).sendKeys("1234");
         navegador.findElement(By.id("submit")).click();
 
@@ -57,7 +61,7 @@ public class CadastroCartaoTest {
         String numeroCartao = modalCartao.findElement(By.id("numeroCartao")).getAttribute("value");
         String saldoCartaoModal = modalCartao.findElement(By.id("saldo")).getAttribute("value");
 
-        Assertions.assertTrue(numeroCartao.replace(" ", "").startsWith("345207441432"));
+        Assertions.assertTrue(numeroCartao.replace(" ", "").startsWith(NUMERO_CARTAO.substring(0, 12)));
         Assertions.assertEquals(saldoCartaoModal.replace("\u00A0", " "), "R$ 500,00");
 
 
@@ -74,7 +78,7 @@ public class CadastroCartaoTest {
                 By.id("cadastroCartao")
         ));
         botaoCadastro.click();
-        navegador.findElement(By.id("numeroCartao")).sendKeys("3452074414321093");
+        navegador.findElement(By.id("numeroCartao")).sendKeys(NUMERO_CARTAO);
         navegador.findElement(By.cssSelector("input.p-password-input")).sendKeys("1234");
         navegador.findElement(By.id("submit")).click();
 
@@ -95,7 +99,7 @@ public class CadastroCartaoTest {
                 By.id("cadastroCartao")
         ));
         botaoCadastro.click();
-        navegador.findElement(By.id("numeroCartao")).sendKeys("34520744143210");
+        navegador.findElement(By.id("numeroCartao")).sendKeys(NUMERO_CARTAO.substring(0, 14));
         navegador.findElement(By.cssSelector("input.p-password-input")).sendKeys("1234");
         navegador.findElement(By.id("submit")).click();
 
@@ -116,7 +120,7 @@ public class CadastroCartaoTest {
                 By.id("cadastroCartao")
         ));
         botaoCadastro.click();
-        navegador.findElement(By.id("numeroCartao")).sendKeys("3452074414321035");
+        navegador.findElement(By.id("numeroCartao")).sendKeys(NUMERO_CARTAO);
         navegador.findElement(By.cssSelector("input.p-password-input")).sendKeys("1a34");
         navegador.findElement(By.id("submit")).click();
 

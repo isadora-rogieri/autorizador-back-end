@@ -48,7 +48,7 @@ public class CartaoServiceTest {
     }
 
     @Test
-    @DisplayName("Deve cadastrar cartão e validar saldo inicial")
+    @DisplayName("Cadastrar cartão e validar saldo inicial")
     void cadastrarCartaoTest() {
 
         CartaoDto dto = new CartaoDto();
@@ -63,7 +63,7 @@ public class CartaoServiceTest {
     }
 
     @Test
-    @DisplayName("Não deve cadastrar cartão existente")
+    @DisplayName("Não deve cadastrar cartão já existente")
     void cadastrarCartaoExistenteTest() {
 
         CartaoDto dto = new CartaoDto();
@@ -76,7 +76,7 @@ public class CartaoServiceTest {
     }
 
     @Test
-    @DisplayName("Consultar Saldo de cartão cadastrado")
+    @DisplayName("Consultar saldo de cartão cadastrado")
     void consultarSaldoCartaoTest() {
 
         BigDecimal saldo = cartaoService.consultaSaldoCartao("5233333444333366");
@@ -86,7 +86,7 @@ public class CartaoServiceTest {
     }
 
     @Test
-    @DisplayName("Consultar Saldo de cartão inexistente")
+    @DisplayName("Consultar saldo de cartão inexistente")
     void consultarSaldoCartaoInexistenteTest() {
 
         CartaoNaoEncontradoException ex = assertThrows(CartaoNaoEncontradoException.class,

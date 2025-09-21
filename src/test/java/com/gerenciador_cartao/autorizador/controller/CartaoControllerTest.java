@@ -64,7 +64,7 @@ public class CartaoControllerTest {
     }
 
     @Test
-    @DisplayName("Deve criar cartão com sucesso")
+    @DisplayName("Criar cartão com sucesso")
     void criarCartaoSucessoTest() throws Exception {
         CartaoDto dto = new CartaoDto("9234567332227577", "1234");
         mockMvc.perform(MockMvcRequestBuilders.post(CARTAO_URL)
@@ -135,7 +135,7 @@ public class CartaoControllerTest {
     }
 
     @Test
-    @DisplayName("Deve retornar 404 cartão não encontrado")
+    @DisplayName("Retornar 404 cartão não encontrado")
     void consultaSaldoCartaoInexistenteTest() throws Exception {
 
         mockMvc.perform(MockMvcRequestBuilders.get(CARTAO_URL + "/9234567832258577")
@@ -146,7 +146,7 @@ public class CartaoControllerTest {
     }
 
     @Test
-    @DisplayName("Deve retornar 401 sem autenticação")
+    @DisplayName("Retornar 401 sem autenticação")
     void headerSemAutenticacaoTest() throws Exception {
         CartaoDto dto = new CartaoDto("1234567890123456", "1234");
         mockMvc.perform(MockMvcRequestBuilders.post(CARTAO_URL)

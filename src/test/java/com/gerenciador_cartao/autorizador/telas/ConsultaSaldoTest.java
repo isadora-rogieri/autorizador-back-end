@@ -1,5 +1,6 @@
 package com.gerenciador_cartao.autorizador.telas;
 
+import com.gerenciador_cartao.autorizador.utils.GeraNumeroCartao;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
@@ -12,9 +13,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 @DisplayName("Teste Automatizado da consulta de saldo de cartão")
+@Tag("ui")
 public class ConsultaSaldoTest {
 
-    WebDriver navegador;
+    private WebDriver navegador;
+
+    private static final String NUMERO_CARTAO = GeraNumeroCartao.gerarNumero16Digitos();
 
     @BeforeEach
     public void inicializaLogin() {
@@ -31,7 +35,7 @@ public class ConsultaSaldoTest {
                 By.id("cadastroCartao")
         ));
         botaoCadastro.click();
-        navegador.findElement(By.id("numeroCartao")).sendKeys("3452074415821093");
+        navegador.findElement(By.id("numeroCartao")).sendKeys(NUMERO_CARTAO);
         navegador.findElement(By.cssSelector("input.p-password-input")).sendKeys("1234");
         navegador.findElement(By.id("submit")).click();
         navegador.get("http://localhost:5137/");
@@ -46,7 +50,7 @@ public class ConsultaSaldoTest {
                 By.id("saldoCartao")
         ));
         botaoSaldo.click();
-        navegador.findElement(By.id("numeroCartao")).sendKeys("3452074415821093");
+        navegador.findElement(By.id("numeroCartao")).sendKeys(NUMERO_CARTAO);
         navegador.findElement(By.id("submit")).click();
 
         WebElement modalCartao = wait.until(ExpectedConditions.visibilityOfElementLocated(
@@ -56,7 +60,7 @@ public class ConsultaSaldoTest {
         String numeroCartao = modalCartao.findElement(By.id("numeroCartao")).getAttribute("value");
         String saldoCartaoModal = modalCartao.findElement(By.id("saldo")).getAttribute("value");
 
-        Assertions.assertTrue(numeroCartao.replace(" ", "").startsWith("345207441582"));
+        Assertions.assertTrue(numeroCartao.replace(" ", "").startsWith(NUMERO_CARTAO.substring(0, 12)));
         Assertions.assertEquals(saldoCartaoModal.replace("\u00A0", " "), "R$ 500,00");
         Assertions.assertEquals(navegador.getCurrentUrl(), "http://localhost:5137/cartao/saldo");
         navegador.quit();
@@ -71,7 +75,8 @@ public class ConsultaSaldoTest {
                 By.id("saldoCartao")
         ));
         botaoSaldo.click();
-        navegador.findElement(By.id("numeroCartao")).sendKeys("3459374414921093");
+        String numeroCartaoInvertido = new StringBuilder(NUMERO_CARTAO).reverse().toString();
+        navegador.findElement(By.id("numeroCartao")).sendKeys(numeroCartaoInvertido);
         navegador.findElement(By.id("submit")).click();
 
 

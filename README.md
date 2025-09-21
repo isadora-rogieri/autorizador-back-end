@@ -79,7 +79,7 @@ autorizador/
 ## Executando o Projeto:
 * mvn clean install -> Instale as dependências necessárias
 * mvn spring-boot:run -> Rodar o projeto
-* mvn test -> Executar testes
+* mvn test -DexcludedGroups=ui -> Executar testes excluindo testes de interfaces
 
 
 ## Endpoints [Swagger](http://localhost:8080/swagger-ui/index.html#)
@@ -203,3 +203,5 @@ Erro de autenticação: 401
 * As senhas dos cartões são salvas utilizando criptografia
 * Os Atributos dos Dtos foram anotados com validações do Jakarta Validation para garantir que os dados atendam às restrições de formato e valor.
 * Foi Criado o GlobalExceptionHandler centralizando as exceções. 
+* Foi Adicionado testes **automatizados de interface** utilizando Selenium WebDriver e JUnit. Esses testes simulam o comportamento de um usuário real no navegador e garantem o funcionamento correto das principais telas do sistema de cadastro de cartão, consulta de saldo e de realização de transações.
+* Para exceção dos testes automatizados, é necessário que os projetos frontend e backend estejam rodando, e que o banco de dados esteja disponível
